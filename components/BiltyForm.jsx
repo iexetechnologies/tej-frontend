@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Button, Row, Col, Modal } from 'react-bootstrap';
+import Select from 'react-select';
+import { FaSearch } from 'react-icons/fa';
+import { components } from 'react-select';
 import {
   FROM,
   TO,
@@ -9,6 +12,48 @@ import {
   VehicleType,
   MaterialType
 } from './data/dropdowndata';
+
+// 🔍 Custom Dropdown Indicator with Search Icon
+const DropdownIndicator = (props) => (
+  <components.DropdownIndicator {...props}>
+    <FaSearch style={{ fontSize: '14px', marginRight: 4 }} />
+  </components.DropdownIndicator>
+);
+
+// 🎨 Slim Single-Line Custom Styles
+const customSelectStyle = {
+  control: (base) => ({
+    ...base,
+    backgroundColor: 'transparent',
+    border: 'none',
+    borderBottom: '1px solid #ced4da',
+    boxShadow: 'none',
+    borderRadius: 0,
+    minHeight: '30px',
+    fontSize: '14px',
+    paddingLeft: 0,
+  }),
+  valueContainer: (base) => ({
+    ...base,
+    padding: '0 0 2px 0',
+  }),
+  indicatorsContainer: (base) => ({
+    ...base,
+    padding: '0 4px',
+  }),
+  placeholder: (base) => ({
+    ...base,
+    color: '#6c757d',
+  }),
+  singleValue: (base) => ({
+    ...base,
+    color: '#212529',
+  }),
+  menu: (base) => ({
+    ...base,
+    zIndex: 5,
+  }),
+};
 
 const BiltyForm = () => {
   const today = new Date().toISOString().split('T')[0];
@@ -41,6 +86,10 @@ const BiltyForm = () => {
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSelectChange = (name, selectedOption) => {
+    setFormData({ ...formData, [name]: selectedOption ? selectedOption.value : '' });
   };
 
   const handleClose = () => setShowPopup(false);
@@ -79,22 +128,30 @@ const BiltyForm = () => {
 
             <Form.Group className="mb-3">
               <Form.Label>FROM *</Form.Label>
-              <Form.Select name="from" value={formData.from} onChange={handleChange} required>
-                <option value="">Select</option>
-                {FROM.map((place, idx) => (
-                  <option key={idx} value={place}>{place}</option>
-                ))}
-              </Form.Select>
+              <Select
+                name="from"
+                options={FROM.map((place) => ({ label: place, value: place }))}
+                value={formData.from ? { label: formData.from, value: formData.from } : null}
+                onChange={(selected) => handleSelectChange('from', selected)}
+                isClearable
+                components={{ DropdownIndicator }}
+                styles={customSelectStyle}
+                placeholder="Select location"
+              />
             </Form.Group>
 
             <Form.Group className="mb-3">
               <Form.Label>TO *</Form.Label>
-              <Form.Select name="to" value={formData.to} onChange={handleChange} required>
-                <option value="">Select</option>
-                {TO.map((place, idx) => (
-                  <option key={idx} value={place}>{place}</option>
-                ))}
-              </Form.Select>
+              <Select
+                name="to"
+                options={TO.map((place) => ({ label: place, value: place }))}
+                value={formData.to ? { label: formData.to, value: formData.to } : null}
+                onChange={(selected) => handleSelectChange('to', selected)}
+                isClearable
+                components={{ DropdownIndicator }}
+                styles={customSelectStyle}
+                placeholder="Select location"
+              />
             </Form.Group>
 
             <Form.Group className="mb-3">
@@ -116,12 +173,16 @@ const BiltyForm = () => {
           <Col md={6}>
             <Form.Group className="mb-3">
               <Form.Label>Consignor's Name *</Form.Label>
-              <Form.Select name="consignorName" value={formData.consignorName} onChange={handleChange} required>
-                <option value="">Select</option>
-                {ConsignorsName.map((name, idx) => (
-                  <option key={idx} value={name}>{name}</option>
-                ))}
-              </Form.Select>
+              <Select
+                name="consignorName"
+                options={ConsignorsName.map((name) => ({ label: name, value: name }))}
+                value={formData.consignorName ? { label: formData.consignorName, value: formData.consignorName } : null}
+                onChange={(selected) => handleSelectChange('consignorName', selected)}
+                isClearable
+                components={{ DropdownIndicator }}
+                styles={customSelectStyle}
+                placeholder="Select name"
+              />
             </Form.Group>
 
             <Form.Group className="mb-3">
@@ -131,12 +192,16 @@ const BiltyForm = () => {
 
             <Form.Group className="mb-3">
               <Form.Label>Consignee's Name *</Form.Label>
-              <Form.Select name="consigneeName" value={formData.consigneeName} onChange={handleChange} required>
-                <option value="">Select</option>
-                {ConsigneesName.map((name, idx) => (
-                  <option key={idx} value={name}>{name}</option>
-                ))}
-              </Form.Select>
+              <Select
+                name="consigneeName"
+                options={ConsigneesName.map((name) => ({ label: name, value: name }))}
+                value={formData.consigneeName ? { label: formData.consigneeName, value: formData.consigneeName } : null}
+                onChange={(selected) => handleSelectChange('consigneeName', selected)}
+                isClearable
+                components={{ DropdownIndicator }}
+                styles={customSelectStyle}
+                placeholder="Select name"
+              />
             </Form.Group>
 
             <Form.Group className="mb-3">
