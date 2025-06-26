@@ -1,23 +1,23 @@
-import { useState } from 'react'
-import './App.css'
-import Sidebar from '../components/Sidebar'
+// App.jsx
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Sidebar from '../components/Sidebar.jsx';
+import BiltyForm from '../components/BiltyForm.jsx';
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-       <div className="App">
-      <Sidebar />
-      <div className="container-fluid" style={{ marginLeft: '250px' }}>
-        <div className="p-4">
-          <h1>Main Content Area</h1>
-          <p>This is where your main page content goes.</p>
+    <Router>
+      <div className="d-flex">
+        <Sidebar />
+        <div className="flex-grow-1 p-4" style={{ marginLeft: '250px' }}>
+          <Routes>
+            <Route path="/bilty" element={<BiltyForm />} />
+            {/* Add other routes if needed */}
+          </Routes>
         </div>
       </div>
-    </div>
-    </>
-  )
+    </Router>
+  );
 }
 
-export default App
+export default App;
