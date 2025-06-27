@@ -55,7 +55,6 @@ const Sidebar = () => {
             </li>
 
             <li className="nav-item">
-<<<<<<< HEAD
               <a href="/  " className="nav-link text-white">
                 Dashboard
               </a>
@@ -74,16 +73,6 @@ const Sidebar = () => {
               <a href="#" className="nav-link text-white">
                 Contact
               </a>
-=======
-              <div
-                className="nav-link text-white d-flex justify-content-between align-items-center px-2"
-                style={{ cursor: 'pointer' }}
-                onClick={toggleBiltyMenu}
-              >
-                <span>Bilty</span>
-                {showBiltySubmenu ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
-              </div>
->>>>>>> cf787c72b79bdafb8ef7c60e551d94526c9a76ac
             </li>
 
             {showBiltySubmenu && (

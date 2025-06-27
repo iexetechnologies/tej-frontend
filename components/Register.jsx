@@ -9,11 +9,19 @@ export default function Register() {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    const res = await fetch('https://<your-backend>.up.railway.app/register', {
+    const res = await fetch('https://tej-backend-production.up.railway.app/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(form)
     });
+
+    // const handleSubmit = async e => {
+    //     e.preventDefault();
+    //     const res = await fetch('http://localhost:5000/register', {
+    //       method: 'POST',
+    //       headers: { 'Content-Type': 'application/json' },
+    //       body: JSON.stringify(form)
+    //     });
 
     const data = await res.json();
     if (res.ok) {
