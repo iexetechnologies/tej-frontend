@@ -31,17 +31,17 @@ const Sidebar = () => {
           <h4 className="mb-4">Tej Fleet</h4>
           <ul className="nav nav-pills flex-column mb-auto">
             <li className="nav-item">
-              <a href="#" className="nav-link text-white">
+              <a href="/  " className="nav-link text-white">
                 Dashboard
               </a>
             </li>
             <li>
-              <a href="#" className="nav-link text-white">
+              <a href="/bilty" className="nav-link text-white">
                 Bilty
               </a>
             </li>
             <li>
-              <a href="#" className="nav-link text-white">
+              <a href="" className="nav-link text-white">
                 Settings
               </a>
             </li>
