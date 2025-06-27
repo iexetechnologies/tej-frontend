@@ -3,6 +3,8 @@ import { Form, Button, Row, Col, Modal } from 'react-bootstrap';
 import Select from 'react-select';
 import { FaSearch } from 'react-icons/fa';
 import { components } from 'react-select';
+import './biltyform.css'; // Import the CSS file
+
 import {
   FROM,
   TO,
@@ -11,7 +13,7 @@ import {
   ConsigneesName,
   VehicleType,
   MaterialType
-} from './data/dropdowndata';
+} from '../assets/dropdowndata';
 
 // 🔍 Custom Dropdown Indicator with Search Icon
 const DropdownIndicator = (props) => (
@@ -24,22 +26,21 @@ const DropdownIndicator = (props) => (
 const customSelectStyle = {
   control: (base) => ({
     ...base,
-    backgroundColor: 'transparent',
-    border: 'none',
-    borderBottom: '1px solid #ced4da',
+    backgroundColor: '#e8f0fe',
+    border: '1px solid #ced4da',
     boxShadow: 'none',
-    borderRadius: 0,
+    borderRadius: '5px',
     minHeight: '30px',
-    fontSize: '14px',
-    paddingLeft: 0,
+    fontSize: '13px',
+    fontFamily: 'Times New Roman, serif',
   }),
   valueContainer: (base) => ({
     ...base,
-    padding: '0 0 2px 0',
+    padding: '0 6px',
   }),
   indicatorsContainer: (base) => ({
     ...base,
-    padding: '0 4px',
+    padding: '0 6px',
   }),
   placeholder: (base) => ({
     ...base,
@@ -101,154 +102,92 @@ const BiltyForm = () => {
   };
 
   return (
-    <>
-      <h3 className="mb-4">Create Bilty</h3>
+    <div className="bilty-page-container">
+      <h3 className="mb-4 text-dark fw-bold  bg-white p-2 rounded shadow-sm text-center"> Create Bilty</h3>
       <Form onSubmit={handleSubmit}>
         <Row>
-          <Col md={6}>
-            <Form.Group className="mb-3">
-              <Form.Label>Consignment No *</Form.Label>
-              <Form.Control name="consignmentNo" value={formData.consignmentNo} onChange={handleChange} required />
-            </Form.Group>
-
-            <Form.Group className="mb-3">
-              <Form.Label>Consignment Date *</Form.Label>
-              <Form.Control type="date" name="consignmentDate" value={formData.consignmentDate} onChange={handleChange} required />
-            </Form.Group>
-
-            <Form.Group className="mb-3">
-              <Form.Label>Movement type *</Form.Label>
-              <Form.Select name="movementType" value={formData.movementType} onChange={handleChange} required>
-                <option value="">Select</option>
-                {MovementType.map((type, idx) => (
-                  <option key={idx} value={type}>{type}</option>
-                ))}
-              </Form.Select>
-            </Form.Group>
-
-            <Form.Group className="mb-3">
-              <Form.Label>FROM *</Form.Label>
-              <Select
-                name="from"
-                options={FROM.map((place) => ({ label: place, value: place }))}
-                value={formData.from ? { label: formData.from, value: formData.from } : null}
-                onChange={(selected) => handleSelectChange('from', selected)}
-                isClearable
-                components={{ DropdownIndicator }}
-                styles={customSelectStyle}
-                placeholder="Select location"
-              />
-            </Form.Group>
-
-            <Form.Group className="mb-3">
-              <Form.Label>TO *</Form.Label>
-              <Select
-                name="to"
-                options={TO.map((place) => ({ label: place, value: place }))}
-                value={formData.to ? { label: formData.to, value: formData.to } : null}
-                onChange={(selected) => handleSelectChange('to', selected)}
-                isClearable
-                components={{ DropdownIndicator }}
-                styles={customSelectStyle}
-                placeholder="Select location"
-              />
-            </Form.Group>
-
-            <Form.Group className="mb-3">
-              <Form.Label>Vehicle Type *</Form.Label>
-              <Form.Select name="vehicleType" value={formData.vehicleType} onChange={handleChange} required>
-                <option value="">Select</option>
-                {VehicleType.map((type, idx) => (
-                  <option key={idx} value={type}>{type}</option>
-                ))}
-              </Form.Select>
-            </Form.Group>
-
-            <Form.Group className="mb-3">
-              <Form.Label>Vehicle No *</Form.Label>
-              <Form.Control name="vehicleNo" value={formData.vehicleNo} onChange={handleChange} required />
-            </Form.Group>
-          </Col>
-
-          <Col md={6}>
-            <Form.Group className="mb-3">
-              <Form.Label>Consignor's Name *</Form.Label>
-              <Select
-                name="consignorName"
-                options={ConsignorsName.map((name) => ({ label: name, value: name }))}
-                value={formData.consignorName ? { label: formData.consignorName, value: formData.consignorName } : null}
-                onChange={(selected) => handleSelectChange('consignorName', selected)}
-                isClearable
-                components={{ DropdownIndicator }}
-                styles={customSelectStyle}
-                placeholder="Select name"
-              />
-            </Form.Group>
-
-            <Form.Group className="mb-3">
-              <Form.Label>Consignor's GST No</Form.Label>
-              <Form.Control name="consignorGST" value={formData.consignorGST} onChange={handleChange} />
-            </Form.Group>
-
-            <Form.Group className="mb-3">
-              <Form.Label>Consignee's Name *</Form.Label>
-              <Select
-                name="consigneeName"
-                options={ConsigneesName.map((name) => ({ label: name, value: name }))}
-                value={formData.consigneeName ? { label: formData.consigneeName, value: formData.consigneeName } : null}
-                onChange={(selected) => handleSelectChange('consigneeName', selected)}
-                isClearable
-                components={{ DropdownIndicator }}
-                styles={customSelectStyle}
-                placeholder="Select name"
-              />
-            </Form.Group>
-
-            <Form.Group className="mb-3">
-              <Form.Label>Consignee's GST No</Form.Label>
-              <Form.Control name="consigneeGST" value={formData.consigneeGST} onChange={handleChange} />
-            </Form.Group>
-
-            <Form.Group className="mb-3">
-              <Form.Label>Quantity</Form.Label>
-              <Form.Control name="quantity" value={formData.quantity} onChange={handleChange} />
-            </Form.Group>
-
-            <Form.Group className="mb-3">
-              <Form.Label>Material Type *</Form.Label>
-              <Form.Select name="materialType" value={formData.materialType} onChange={handleChange} required>
-                <option value="">Select</option>
-                {MaterialType.map((type, idx) => (
-                  <option key={idx} value={type}>{type}</option>
-                ))}
-              </Form.Select>
-            </Form.Group>
-
-            <Form.Group className="mb-3">
-              <Form.Label>Invoice No (Tata Invoice No)</Form.Label>
-              <Form.Control name="invoiceNo" value={formData.invoiceNo} onChange={handleChange} />
-            </Form.Group>
-
-            <Form.Group className="mb-3">
-              <Form.Label>E-Way Bill No</Form.Label>
-              <Form.Control name="ewayBillNo" value={formData.ewayBillNo} onChange={handleChange} />
-            </Form.Group>
-          </Col>
+          {[
+            ['Consignment No *', 'consignmentNo', 'text'],
+            ['Consignment Date *', 'consignmentDate', 'date'],
+            ['Movement Type *', 'movementType', 'select', MovementType],
+            ['FROM *', 'from', 'selectSearch', FROM],
+            ['TO *', 'to', 'selectSearch', TO],
+            ['Vehicle Type *', 'vehicleType', 'select', VehicleType],
+            ['Vehicle No *', 'vehicleNo', 'text'],
+            ['Consignor\'s Name *', 'consignorName', 'selectSearch', ConsignorsName],
+            ['Consignor\'s GST No', 'consignorGST', 'text'],
+            ['Consignee\'s Name *', 'consigneeName', 'selectSearch', ConsigneesName],
+            ['Consignee\'s GST No', 'consigneeGST', 'text'],
+            ['Quantity', 'quantity', 'text'],
+            ['Material Type *', 'materialType', 'select', MaterialType],
+            ['Invoice No (Tata Invoice No)', 'invoiceNo', 'text'],
+            ['E-Way Bill No', 'ewayBillNo', 'text']
+          ].map(([label, name, type, options], idx) => (
+            <Col md={4} key={name} className="mb-3">
+              <Form.Group>
+                <Form.Label className="label-bg">{label}</Form.Label>
+                {type === 'text' || type === 'date' ? (
+                  <Form.Control
+                    type={type}
+                    name={name}
+                    value={formData[name]}
+                    onChange={handleChange}
+                    required={label.includes('*')}
+                    className="form-control-sm bg-light"
+                  />
+                ) : type === 'select' ? (
+                  <Form.Select
+                    name={name}
+                    value={formData[name]}
+                    onChange={handleChange}
+                    required={label.includes('*')}
+                    className="form-select-sm bg-light"
+                  >
+                    <option value="">Select</option>
+                    {options.map((opt, i) => (
+                      <option key={i} value={opt}>{opt}</option>
+                    ))}
+                  </Form.Select>
+                ) : (
+                  <Select
+                    name={name}
+                    options={options.map((item) => ({ label: item, value: item }))}
+                    value={formData[name] ? { label: formData[name], value: formData[name] } : null}
+                    onChange={(selected) => handleSelectChange(name, selected)}
+                    isClearable
+                    components={{ DropdownIndicator }}
+                    styles={customSelectStyle}
+                    placeholder="Select"
+                  />
+                )}
+              </Form.Group>
+            </Col>
+          ))}
         </Row>
 
-        <Button variant="primary" type="submit">Submit</Button>
+        <div className="text-center mt-3">
+          <Button
+            variant="primary"
+            size="sm"
+            className="fw-bold"
+            style={{ width: '150px', fontSize: '15px' }}
+          >
+          Submit
+          </Button>
+        </div>
+
       </Form>
 
       <Modal show={showPopup} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Duplicate LR No.</Modal.Title>
+          <Modal.Title className="text-danger">⚠ Duplicate LR No.</Modal.Title>
         </Modal.Header>
         <Modal.Body>This consignment number already exists. Please verify before submitting.</Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>Okay</Button>
         </Modal.Footer>
       </Modal>
-    </>
+    </div>
   );
 };
 

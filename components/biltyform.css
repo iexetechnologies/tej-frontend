@@ -1,0 +1,17 @@
+.bilty-page-container {
+  background-color: #a5b6a3; /* light bluish background */
+  min-height: 100vh;
+  padding: 20px;
+  font-family: "Times New Roman", serif;
+}
+.label-bg {
+  background-color: #729dc8; /* Light gray-blue (different from white background) */
+  font-weight: 600;
+  color: #010101;
+  padding: 4px 8px;
+  display: inline-block;
+  border-radius: 4px;
+  margin-bottom: 4px;
+  font-size: 14px;
+  font-family: "Times New Roman", serif;
+}
