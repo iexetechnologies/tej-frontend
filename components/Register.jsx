@@ -1,9 +1,10 @@
-// src/components/RegisterForm.jsx
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function Register() {
   const [form, setForm] = useState({ username: '', password: '', role: 'user' });
-  const [msg, setMsg] = useState('');
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value });
 
@@ -14,20 +15,12 @@ export default function Register() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(form)
     });
-
-    // const handleSubmit = async e => {
-    //     e.preventDefault();
-    //     const res = await fetch('http://localhost:5000/register', {
-    //       method: 'POST',
-    //       headers: { 'Content-Type': 'application/json' },
-    //       body: JSON.stringify(form)
-    //     });
-
     const data = await res.json();
     if (res.ok) {
-      setMsg(`Registered as ${data.username}`);
+      navigate('/login');
+      alert("Registration Successfull");
     } else {
-      setMsg(data.error || 'Error occurred');
+      setError(data.error);
     }
   };
 
@@ -41,7 +34,7 @@ export default function Register() {
         <option value="admin">Admin</option>
       </select>
       <button type="submit">Register</button>
-      <p>{msg}</p>
+      {error && <p>{error}</p>}
     </form>
   );
 }
