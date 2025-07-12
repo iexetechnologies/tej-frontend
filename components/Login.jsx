@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './Login.css'; // Import CSS for custom styling
 
 export default function Login() {
   const [form, setForm] = useState({ username: '', password: '' });
@@ -15,22 +16,47 @@ export default function Login() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(form)
     });
+
     const data = await res.json();
     if (res.ok) {
       localStorage.setItem('token', data.token);
-      navigate('/dashboard');
+      navigate('/bilty');
     } else {
-      setError(data.error);
+      setError(data.error || "Login failed");
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Login</h2>
-      <input name="username" onChange={handleChange} placeholder="Username" required />
-      <input name="password" type="password" onChange={handleChange} placeholder="Password" required />
-      <button type="submit">Login</button>
-      {error && <p>{error}</p>}
-    </form>
+    <div className="login-container d-flex justify-content-center align-items-center">
+      <div className="login-box p-4 shadow rounded">
+        <h3 className="text-center mb-4">Welcome Back</h3>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <input
+              name="username"
+              className="form-control"
+              onChange={handleChange}
+              placeholder="Username"
+              required
+            />
+          </div>
+          <div className="mb-3">
+            <input
+              name="password"
+              type="password"
+              className="form-control"
+              onChange={handleChange}
+              placeholder="Password"
+              required
+            />
+          </div>
+          {error && <p className="text-danger text-center">{error}</p>}
+          <button type="submit" className="btn btn-primary w-100">Login</button>
+        </form>
+        <p className="text-center mt-3 mb-0">
+          Don’t have an account? <a href="/register">Register</a>
+        </p>
+      </div>
+    </div>
   );
 }
