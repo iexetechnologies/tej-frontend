@@ -1,22 +1,36 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './Dashboard.css'; // ← Add this line to apply custom styles
 
-export default function Dashboard() {
+function Dashboard() {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
   const fetchUser = async () => {
     const token = localStorage.getItem('token');
-    const res = await fetch('https://tej-backend-production.up.railway.app/user', {
-      headers: { Authorization: `Bearer ${token}` }
-    });
 
-    const data = await res.json();
-    if (res.ok) {
-      setUser(data);
-    } else {
-      localStorage.removeItem('token');
+    if (!token) {
+      navigate('/login');
+      return;
+    }
+
+    try {
+      const res = await fetch('https://tej-backend-production.up.railway.app/user', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      const data = await res.json();
+      console.log('User fetched:', data); // Add this line
+
+      if (res.ok) {
+        setUser(data);
+      } else {
+        console.error('Error fetching user:', data.error);
+        navigate('/login');
+      }
+    } catch (err) {
+      console.error('Network error:', err);
       navigate('/login');
     }
   };
@@ -25,26 +39,20 @@ export default function Dashboard() {
     fetchUser();
   }, []);
 
-  const logout = () => {
+  const handleLogout = () => {
     localStorage.removeItem('token');
     navigate('/login');
   };
 
-  return user ? (
-    <div className="dashboard-container d-flex justify-content-center align-items-center">
-      <div className="dashboard-box p-4 shadow rounded text-center">
-        <h3 className="mb-3">Welcome, {user.name}!</h3>
-        <p className="mb-3">Role: <strong>{user.role}</strong></p>
-        <button className="btn btn-danger w-100" onClick={logout}>
-          Logout
-        </button>
-      </div>
-    </div>
-  ) : (
-    <div className="dashboard-container d-flex justify-content-center align-items-center">
-      <div className="dashboard-box text-center">
-        <p>Loading...</p>
-      </div>
+  if (!user) return <p>Loading...</p>;
+
+  return (
+    <div style={{ padding: '2rem' }}>
+      <h1>Welcome, {user.username}!</h1>
+      <p><strong>Role:</strong> {user.role}</p>
+      <button onClick={handleLogout}>Logout</button>
     </div>
   );
 }
+
+export default Dashboard;
